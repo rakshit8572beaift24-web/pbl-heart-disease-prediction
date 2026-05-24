@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.env
+.env
+venv/
+.env.*
+*.sqlite3
+*.db
+*.log
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# build
+build/
+dist/
+*.egg-info/
+*.egg
+*.log
+
+# IDEs
+.vscode/
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python packaging
+*.egg-info
+.eggs/
+
+# Misc
+*.pyc
+*.pyo
+*.pyd
+
+# Frontend build output
+frontend/build/
+
+# Chat sessions / user data
+backend/chat_sessions.json
+backend/users.json
