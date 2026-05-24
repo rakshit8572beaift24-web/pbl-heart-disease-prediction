@@ -1,5 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from pydantic import BaseModel, validator
 from typing import Optional, List, Dict
 import os
@@ -15,7 +17,17 @@ import hashlib
 from datetime import datetime
 import chat_service
 
+FRONTEND_BUILD_DIR = os.path.abspath(os.path.join(_BACKEND_DIR, '..', 'frontend', 'build'))
+
 app = FastAPI(title="Heart Disease Prediction API", version="1.0.0")
+
+# Mount frontend static assets when available
+if os.path.isdir(FRONTEND_BUILD_DIR):
+    app.mount(
+        "/static",
+        StaticFiles(directory=os.path.join(FRONTEND_BUILD_DIR, "static")),
+        name="static",
+    )
 
 # Enable CORS for frontend
 app.add_middleware(
@@ -171,6 +183,8 @@ class PredictionResponse(BaseModel):
 
 @app.get("/")
 async def root():
+    if os.path.isdir(FRONTEND_BUILD_DIR):
+        return FileResponse(os.path.join(FRONTEND_BUILD_DIR, 'index.html'))
     return {"message": "Heart Disease Prediction API"}
 
 # User data models
@@ -554,6 +568,15 @@ async def options_predict():
     response.headers["Access-Control-Allow-Methods"] = "POST, OPTIONS"
     response.headers["Access-Control-Allow-Headers"] = "*"
     return response
+
+@app.get("/{full_path:path}")
+async def spa(full_path: str):
+    if os.path.isdir(FRONTEND_BUILD_DIR):
+        requested_path = os.path.join(FRONTEND_BUILD_DIR, full_path)
+        if os.path.exists(requested_path) and os.path.isfile(requested_path):
+            return FileResponse(requested_path)
+        return FileResponse(os.path.join(FRONTEND_BUILD_DIR, 'index.html'))
+    raise HTTPException(status_code=404, detail="Not Found")
 
 @app.post("/predict", response_model=PredictionResponse)
 async def predict_heart_disease(data: HealthData):

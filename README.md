@@ -6,23 +6,26 @@ This repository contains a full-stack heart disease prediction application with:
 
 ## Render Deployment
 
-This project includes `render.yaml` to deploy both services on Render:
-- `heart-disease-backend` (Python web service)
-- `heart-disease-frontend` (Static site)
+This project includes `render.yaml` for a single Docker-based Render service:
+- `heart-disease-app` (Docker web service hosting both the React frontend and FastAPI backend)
 
 ### Setup Steps
 
 1. Push this repository to GitHub.
 2. In Render, connect the GitHub repository.
-3. Add the following services from `render.yaml`:
-   - `heart-disease-backend`
-   - `heart-disease-frontend`
-4. Set environment variables for the backend service:
+3. Create a new Web Service and choose `Docker` deployment.
+4. Point it at the repository branch `main`.
+5. Render will use `render.yaml` and the root `Dockerfile`.
+6. Set environment variables:
    - `OPENAI_API_KEY` (optional, only if you want chatbot AI integration)
    - `OPENAI_MODEL` (optional, default is `gpt-4o-mini`)
-5. After the backend service is deployed, copy its public URL.
-6. Set `REACT_APP_API_URL` for the frontend service to the backend URL.
-7. Redeploy the frontend service.
+7. Deploy the service.
+
+### Notes
+
+- The backend serves the React build from `frontend/build`.
+- API calls are relative by default, so the frontend will work from the same origin.
+- No separate `REACT_APP_API_URL` is required for production deployment in the same service.
 
 ## Local Development
 
