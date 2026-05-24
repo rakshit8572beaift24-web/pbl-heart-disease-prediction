@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API_BASE_URL } from '../config/api';
 import { Heart, Eye, EyeOff, Mail, Lock, User, Check, X, AlertCircle, Loader2, UserPlus, Calendar, Shield } from 'lucide-react';
 
 interface SignupProps {
