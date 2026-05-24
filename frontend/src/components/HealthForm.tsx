@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { API_BASE_URL } from '../config/api';
 import { Heart, AlertCircle, ChevronRight, ChevronLeft, Info, Loader2 } from 'lucide-react';
 
 // Type definitions
@@ -271,7 +272,7 @@ const HealthForm: React.FC<HealthFormProps> = ({ onPrediction, darkMode }) => {
     try {
       console.log('Sending prediction request with data:', formData);
       
-      const response = await fetch('http://localhost:8000/predict', {
+      const response = await fetch(`${API_BASE_URL}/predict`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: heart-disease-backend
+    env: python
+    plan: free
+    branch: main
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: OPENAI_API_KEY
+      - key: OPENAI_MODEL
+  - type: static
+    name: heart-disease-frontend
+    plan: free
+    branch: main
+    buildCommand: cd frontend && npm install && npm run build
+    publishDirectory: frontend/build
+    envVars:
+      - key: REACT_APP_API_URL

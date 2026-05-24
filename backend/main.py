@@ -20,10 +20,9 @@ app = FastAPI(title="Heart Disease Prediction API", version="1.0.0")
 # Enable CORS for frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origin_regex=r"https?://(localhost|127\.0\.0\.1)(:[0-9]+)?",
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
-    # allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
 )
 

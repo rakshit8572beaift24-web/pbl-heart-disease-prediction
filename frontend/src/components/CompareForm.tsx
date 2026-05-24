@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { API_BASE_URL } from '../config/api';
 
 interface HealthData {
   age: number;
@@ -97,7 +98,7 @@ const CompareForm: React.FC<CompareFormProps> = ({ onCompare, onCancel, darkMode
   };
 
   const fetchPrediction = async (healthData: HealthData) => {
-    const response = await fetch('http://localhost:8000/predict', {
+    const response = await fetch(`${API_BASE_URL}/predict`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(healthData),

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { API_BASE_URL } from '../config/api';
 import { Heart, Eye, EyeOff, Mail, Lock, AlertCircle, Loader2 } from 'lucide-react';
 
 interface LoginProps {
@@ -44,7 +45,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, darkMode, toggleDarkMode, onSign
     
     // Send login request to backend
     try {
-      const response = await fetch('http://localhost:8000/login', {
+      const response = await fetch(`${API_BASE_URL}/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

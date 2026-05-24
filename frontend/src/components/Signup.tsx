@@ -133,7 +133,7 @@ const Signup: React.FC<SignupProps> = ({ onSignup, darkMode, toggleDarkMode, onL
     
     // Send registration data to backend
     try {
-      const response = await fetch('http://localhost:8000/signup', {
+      const response = await fetch(`${API_BASE_URL}/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
